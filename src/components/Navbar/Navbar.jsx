@@ -70,7 +70,7 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {/* <a className="btn"></a> */}
                     <Link to="/login">
-                        <button className="btn btn-info">Login</button>
+                        <button className="btn btn-secondary">Login</button>
                     </Link>
                 </div>
             </div>
