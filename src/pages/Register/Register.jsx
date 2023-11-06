@@ -1,8 +1,38 @@
 
 import { Link } from "react-router-dom";
 import registerImage from "../../assets/images/registration.gif"
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
+
+    const { createGroupStudyUser } = useContext(AuthContext);
+
+    const handleGroupStudyUserRegistration = (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const name = form.name.value;
+        const photoURL = form.photoURL.value;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        console.log(name, photoURL, email, password);
+
+        createGroupStudyUser(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            })
+
+
+    }
+
     return (
         <div>
 
@@ -12,7 +42,8 @@ const Register = () => {
                         <img src={registerImage} alt="" className="" />
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <form className="card-body">
+                        <form onSubmit={handleGroupStudyUserRegistration}
+                            className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
