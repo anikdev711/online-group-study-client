@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImage from "../../assets/images/loginimage.png"
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -7,6 +7,9 @@ import { AuthContext } from "../../providers/AuthProvider";
 const Login = () => {
 
     const { signInGroupStudyUserByEmailPassword, signInGroupStudyUserByGoogle } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from || '/';
 
     //sign in with email and password
 
@@ -23,6 +26,7 @@ const Login = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -39,6 +43,7 @@ const Login = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 const errorCode = error.code;
