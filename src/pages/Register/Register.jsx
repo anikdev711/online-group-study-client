@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import registerImage from "../../assets/images/registration.gif"
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
 
@@ -23,6 +24,17 @@ const Register = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
+                //user profile update
+                updateProfile(user, {
+                    displayName: name,
+                    photoURL: photoURL
+                })
+                    .then(() => {
+                        console.log('update profile successfully');
+                    })
+                    .catch((error) => {
+                        console.log(error.message);
+                    })
             })
             .catch((error) => {
                 const errorCode = error.code;
