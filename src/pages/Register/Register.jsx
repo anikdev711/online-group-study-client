@@ -4,10 +4,13 @@ import registerImage from "../../assets/images/registration.gif"
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { updateProfile } from "firebase/auth";
+import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const Register = () => {
 
     const { createGroupStudyUser } = useContext(AuthContext);
+    const axios = useAxios();
 
     const handleGroupStudyUserRegistration = (event) => {
         event.preventDefault();
@@ -35,6 +38,28 @@ const Register = () => {
                     .catch((error) => {
                         console.log(error.message);
                     })
+
+                //create user to the database
+                const newUser = {
+                    email
+                }
+
+                console.log(newUser);
+                axios.post('/users', newUser)
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data.insertedId);
+                        if (response.data.insertedId) {
+                            // toast.success('Successfully toasted!')
+                            Swal.fire("User created successfully");
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+
+
+
             })
             .catch((error) => {
                 const errorCode = error.code;
