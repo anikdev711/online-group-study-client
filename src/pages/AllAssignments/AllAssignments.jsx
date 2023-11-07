@@ -1,15 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import AssignmentCard from "./AssignmentCard";
+// import useAllAssignments from "../../hooks/useAllAssignments";
 
 
 const AllAssignments = () => {
     const axios = useAxios();
 
-    const getAllAssignmentsFromDb = async () => {
-        const response = await axios.get('/assignments');
+    // const getAllAssignmentsFromDb = async () => {
+    //     const response = await axios.get('/assignments');
+    //     return response;
+    // }
+    // const getAllAssignmentsFromDb = useAllAssignments();
+    // console.log(getAllAssignmentsFromDb);
+
+    const getAllAssignmentsFromDb = () => {
+        const response = axios.get('/assignments');
         return response;
     }
+
     const {
         data,
         isLoading,

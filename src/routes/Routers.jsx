@@ -10,6 +10,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import AssignmentDetails from "../pages/AssignmentDetails/AssignmentDetails";
+import SubmissionForm from "../pages/SubmissionForm/SubmissionForm";
 
 const router = createBrowserRouter([
     {
@@ -43,8 +44,16 @@ const router = createBrowserRouter([
                 element: <MyAssignments></MyAssignments>
             },
             {
+                path: "/submission-form",
+                element: <PrivateRoute>
+                    <SubmissionForm></SubmissionForm>
+                </PrivateRoute>
+            },
+            {
                 path: "/submitted-assignments",
-                element: <SubmittedAssignments></SubmittedAssignments>
+                element: <PrivateRoute>
+                    <SubmittedAssignments></SubmittedAssignments>
+                </PrivateRoute>
             },
             {
                 path: "/login",
