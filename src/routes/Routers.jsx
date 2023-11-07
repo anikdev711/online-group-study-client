@@ -10,7 +10,8 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import AssignmentDetails from "../pages/AssignmentDetails/AssignmentDetails";
-import SubmissionForm from "../pages/SubmissionForm/SubmissionForm";
+import SubmittedAssignmentDetails from "../pages/SubmittedAssignmentDetails/SubmittedAssignmentDetails";
+// import SubmissionForm from "../pages/SubmissionForm/SubmissionForm";
 
 const router = createBrowserRouter([
     {
@@ -43,17 +44,24 @@ const router = createBrowserRouter([
                 path: "/my-assignments",
                 element: <MyAssignments></MyAssignments>
             },
-            {
-                path: "/submission-form",
-                element: <PrivateRoute>
-                    <SubmissionForm></SubmissionForm>
-                </PrivateRoute>
-            },
+            // {
+            //     path: "/:id/submission-form",
+            //     element: <PrivateRoute>
+            //         <SubmissionForm></SubmissionForm>
+            //     </PrivateRoute>
+            // },
             {
                 path: "/submitted-assignments",
                 element: <PrivateRoute>
                     <SubmittedAssignments></SubmittedAssignments>
                 </PrivateRoute>
+            },
+            {
+                path: "/submitted-assignments/:id",
+                element: <PrivateRoute>
+                    <SubmittedAssignmentDetails></SubmittedAssignmentDetails>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5173/submitted-assignments/${params.id}`)
             },
             {
                 path: "/login",
