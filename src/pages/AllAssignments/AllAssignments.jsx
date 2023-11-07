@@ -1,18 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import AssignmentCard from "./AssignmentCard";
-// import useAllAssignments from "../../hooks/useAllAssignments";
-
 
 const AllAssignments = () => {
     const axios = useAxios();
-
-    // const getAllAssignmentsFromDb = async () => {
-    //     const response = await axios.get('/assignments');
-    //     return response;
-    // }
-    // const getAllAssignmentsFromDb = useAllAssignments();
-    // console.log(getAllAssignmentsFromDb);
 
     const getAllAssignmentsFromDb = () => {
         const response = axios.get('/assignments');
@@ -23,21 +14,18 @@ const AllAssignments = () => {
         data,
         isLoading,
         isError,
-        error
+        error,
     } = useQuery({
         queryKey: ["assignments"],
-        queryFn: getAllAssignmentsFromDb
+        queryFn: getAllAssignmentsFromDb,
+    
     })
 
     // console.log(data);
-
+    
     if (isError) {
         return <p>Something went wrong...{error}</p>
     }
-
-
-
-
 
     return (
         <div>
@@ -55,18 +43,13 @@ const AllAssignments = () => {
                             data?.data?.map((assignment) => (
                                 <AssignmentCard
                                     key={assignment.id}
-                                    assignment={assignment}></AssignmentCard>
+                                    assignment={assignment}
+                                    data={data}></AssignmentCard>
                             ))
                         )
                 }
 
-
-
             </div>
-
-
-
-
         </div>
     );
 };

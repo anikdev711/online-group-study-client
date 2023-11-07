@@ -1,7 +1,12 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
+// import { QueryCache, useMutation } from "@tanstack/react-query";
 
-
-const AssignmentCard = ({ assignment }) => {
+const AssignmentCard = ({ assignment, data }) => {
+    // console.log(assignment);
 
     const {
         _id,
@@ -10,20 +15,69 @@ const AssignmentCard = ({ assignment }) => {
         difficulty,
         marks,
         dueDate,
+        userEmail
+
     } = assignment;
+
+    const axios = useAxios();
+
+    const { user } = useContext(AuthContext);
+    // console.log(user.email);
+
+    const handleDeleteAssignment = (_id) => {
+        if (userEmail === user.email) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/assignments/${_id}`)
+                        .then((response) => {
+                            console.log(response);
+                            console.log(response.data);
+                            if (response.data.deletedCount > 0) {
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your assignment has been deleted.",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                const remainingAssignments = data?.data?.filter((item) => item._id !== _id);
+                                console.log(remainingAssignments);
+                                // window.location.reload()
+                            }
+                        })
+
+                }
+                window.location.reload();
+            });
+
+
+        }
+        else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "You can not delete",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+        }
+    }
 
     return (
         <div>
 
 
-            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[500px] md:min-h-[600px] lg:min-h-[550px]">
-
-
+            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[500px] md:min-h-[650px] lg:min-h-[600px]">
 
                 <div className="">
                     <img className="rounded-t-lg" src={thumbnailImageURL} alt="" />
                 </div>
-
 
                 <div className="p-5">
 
@@ -72,11 +126,14 @@ const AssignmentCard = ({ assignment }) => {
 
                             </div>
 
-
-
                         </div>
 
-
+                        <div className="mt-4">
+                            <button
+                                onClick={() => handleDeleteAssignment(_id)}
+                                className="btn btn-warning w-full font-bold"
+                            >Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>

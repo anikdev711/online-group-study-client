@@ -3,12 +3,15 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
+// import { useNavigation } from "react-router-dom";
 
 const UpdateAssignmentsCard = ({ isUpdateAssignment }) => {
 
     // console.log(isUpdateAssignment);
     const [selectedDueDate, setSelectedDueDate] = useState(null);
     const axios = useAxios();
+    // const navigate = useNavigation();
     const {
         _id,
         description,
@@ -47,6 +50,10 @@ const UpdateAssignmentsCard = ({ isUpdateAssignment }) => {
         axios.put(`/assignments/${_id}`, updateAssignmentInfo)
             .then((response) => {
                 console.log(response);
+                if(response.data.modifiedCount>0){
+                    Swal.fire("Assignment updated successfully");
+                    // navigate('/all-assignments')
+                }
             })
             .catch((error) => {
                 console.log(error);
