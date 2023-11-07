@@ -3,10 +3,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImage from "../../assets/images/loginimage.png"
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import useAxios from "../../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const Login = () => {
 
     const { signInGroupStudyUserByEmailPassword, signInGroupStudyUserByGoogle } = useContext(AuthContext);
+    const {signOutGroupStudyUser}=useContext(AuthContext)
+    const axios = useAxios();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from || '/';
@@ -24,9 +28,20 @@ const Login = () => {
 
         signInGroupStudyUserByEmailPassword(email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                navigate(from, { replace: true });
+                const signedInUser = userCredential.user;
+                console.log(signedInUser);
+                const user = {
+                    email
+                }
+                const response = axios.post('/auth/user-token',user)
+                if(response.data.success){
+                    console.log(response);
+                    Swal.fire("Signed in successfully");
+                    navigate(from, { replace: true });
+                }
+                else{
+                    signOutGroupStudyUser();
+                }
             })
             .catch((error) => {
                 const errorCode = error.code;
