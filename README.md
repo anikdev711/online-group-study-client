@@ -1,8 +1,16 @@
-# React + Vite
+assignment_category_0001
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website Name: StudyPeerConnect
 
-Currently, two official plugins are available:
+Website Live Link: 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Website Features: 
+
+The website is about a online study group. To make this website, React JS, React router, Node JS, MongoDB, Express, Firebase and JSON Web Token are used. 
+The features of this website are: 
+* There is a navbar. Here the routes are situated. The visitor can routes the desired page by routing this routers. Only all assignment route is public and others are private route. So, visitors need to register or login to visit the private route.
+* There is a login button at the end of the navbar. Toggle between register and login has been implemented. For registration, password validation is added. The password must have more than 6 characters, at least one capital letter and one special character. 
+* JSON web token is stored on the cookie when a valid user is logged in the website. Only user will see his or her submitted assignments into my assignment page. 
+* All valid users can see the all submitted assignments in the submitted assignment page. User can give mark to the assignments. After giving mark, the user who submitted the assignment will see the status, obtained marks and feedback.
+* A valid user can create assignment in create assignment page. Only the user who create the assignment can delete the assignment. 
+

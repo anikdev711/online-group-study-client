@@ -43,7 +43,7 @@ const AssignmentCard = ({ assignment, data }) => {
                             if (response.data.deletedCount > 0) {
                                 Swal.fire({
                                     title: "Deleted!",
-                                    text: "Your assignment has been deleted.",
+                                    text: "Assignment has been deleted. Please Reload.",
                                     icon: "success",
                                     timer: 1500
                                 });
@@ -54,7 +54,7 @@ const AssignmentCard = ({ assignment, data }) => {
                         })
 
                 }
-                window.location.reload();
+                // window.location.reload();
             });
 
 
