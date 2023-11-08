@@ -1,25 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../hooks/useAxios";
 import AssignmentCard from "./AssignmentCard";
-// import { useState } from "react";
-// import { CapitalizedWordsForDifficulties } from "../../utils/Capitalizations";
-// import Container from "../../ui/Container";
+import { useState } from "react";
+import { CapitalizedWordsForDifficulties } from "../../utils/Capitalizations";
+import Container from "../../ui/Container";
 
-// const difficulties = [
-//     "Easy",
-//     "Medium",
-//     "Hard"
-// ]
+const difficulties = [
+    "Easy",
+    "Medium",
+    "Hard"
+]
 
 const AllAssignments = () => {
     const axios = useAxios();
-    // const [difficulty, setDifficulty] = useState('');
-    // const [page, setPage] = useState(1);
-    // const limit = 2;
+    const [difficulty, setDifficulty] = useState('');
+    const [page, setPage] = useState(1);
+    const limit = 3;
 
-    const getAllAssignmentsFromDb = () => {
-        // const response = axios.get(`/assignments?difficulty=${difficulty}&page=${page}&limit=${limit}`);
-        const response = axios.get('/assignments');
+    const getAllAssignmentsFromDb = async () => {
+        const response = await axios.get(`/assignments?difficulty=${difficulty}&page=${page}&limit=${limit}`);
+        // const response = axios.get('/assignments');
         return response;
     }
 
@@ -29,25 +29,28 @@ const AllAssignments = () => {
         isError,
         error,
     } = useQuery({
-        queryKey: ["assignments"],
+        queryKey: ["assignments", difficulty, page],
         queryFn: getAllAssignmentsFromDb,
 
     })
 
-    // console.log(data);
+    console.log(data);
 
-    // const handlePrevPage = () => {
-    //     if (page > 1) {
-    //         setPage(page - 1);
-    //     }
-    // }
+    const totalNumberOfPages = Math.ceil(data?.data?.total / limit);
+    console.log(totalNumberOfPages);
 
-    // const handleNextPage = () => {
-    //     if (page.length < totalNumberOfPages) {
+    const handlePrevPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    }
 
-    //         setPage(page + 1);
-    //     }
-    // }
+    const handleNextPage = () => {
+        if (page < totalNumberOfPages) {
+
+            setPage(page + 1);
+        }
+    }
 
     // const totalNumberOfPages = Math.ceil(data?.data?.total / limit);
     // console.log(totalNumberOfPages);
@@ -60,9 +63,9 @@ const AllAssignments = () => {
         <div>
             <h1 className="text-3xl font-extrabold text-center pt-10 mb-10">All Assignments</h1>
             {/* filtering */}
-            {/* <div> */}
+            <div>
                 {/* filtering will show here  */}
-                {/* <div className="form-control">
+                <div className="form-control">
 
                     <label htmlFor="" className="label">
                         <span className="label-text">Difficulty</span>
@@ -89,14 +92,14 @@ const AllAssignments = () => {
                     </select>
 
                 </div>
-            </div> */}
+            </div>
 
             {/* all assignments  */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto p-4">
                 {
                     isLoading ? (<div className="flex justify-center items-center h-screen"><progress className="progress w-56"></progress></div>)
                         : (
-                            data?.data?.map((assignment) => (
+                            data?.data?.result?.map((assignment) => (
                                 <AssignmentCard
                                     key={assignment.id}
                                     assignment={assignment}
@@ -111,7 +114,7 @@ const AllAssignments = () => {
 
 
             {/* <div className="mt-10 mb-10 flex justify-end"> */}
-            {/* <Container className="mt-10 mb-10 flex justify-end">
+            <Container className="mt-10 mb-10 flex justify-end">
                 {
                     isLoading ? (<p>Loading...</p>)
                         : (
@@ -134,7 +137,7 @@ const AllAssignments = () => {
                             </div>
                         )
                 }
-            </Container> */}
+            </Container>
 
 
             {/* </div> */}

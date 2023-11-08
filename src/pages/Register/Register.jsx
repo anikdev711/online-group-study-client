@@ -1,7 +1,8 @@
+/* eslint-disable no-useless-escape */
 
 import { Link } from "react-router-dom";
 import registerImage from "../../assets/images/registration.gif"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import useAxios from "../../hooks/useAxios";
@@ -10,6 +11,7 @@ import Swal from "sweetalert2";
 const Register = () => {
 
     const { createGroupStudyUser } = useContext(AuthContext);
+    const [registerError, setRegisterError] = useState('');
     const axios = useAxios();
 
     const handleGroupStudyUserRegistration = (event) => {
@@ -23,49 +25,62 @@ const Register = () => {
 
         console.log(name, photoURL, email, password);
 
-        createGroupStudyUser(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                //user profile update
-                updateProfile(user, {
-                    displayName: name,
-                    photoURL: photoURL
+        if (password.length < 6) {
+            setRegisterError('password must be greater than 6 character')
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setRegisterError('Password should have at least one capital letter')
+        }
+        else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password)) {
+            setRegisterError('Password should have one special character')
+        }
+        else {
+
+            createGroupStudyUser(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    //user profile update
+                    updateProfile(user, {
+                        displayName: name,
+                        photoURL: photoURL
+                    })
+                        .then(() => {
+                            console.log('update profile successfully');
+                        })
+                        .catch((error) => {
+                            console.log(error.message);
+                        })
+
+                    //create user to the database
+                    const newUser = {
+                        email
+                    }
+
+                    console.log(newUser);
+                    axios.post('/users', newUser)
+                        .then((response) => {
+                            console.log(response);
+                            console.log(response.data.insertedId);
+                            if (response.data.insertedId) {
+                                // toast.success('Successfully toasted!')
+                                Swal.fire("User created successfully");
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+
+
+
                 })
-                    .then(() => {
-                        console.log('update profile successfully');
-                    })
-                    .catch((error) => {
-                        console.log(error.message);
-                    })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                })
 
-                //create user to the database
-                const newUser = {
-                    email
-                }
-
-                console.log(newUser);
-                axios.post('/users', newUser)
-                    .then((response) => {
-                        console.log(response);
-                        console.log(response.data.insertedId);
-                        if (response.data.insertedId) {
-                            // toast.success('Successfully toasted!')
-                            Swal.fire("User created successfully");
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-
-
-
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            })
+        }
 
 
     }
@@ -121,6 +136,15 @@ const Register = () => {
                                     placeholder="Enter password"
                                     className="input input-bordered" required />
                             </div>
+
+                            <div>
+                                {
+                                    registerError && <p>{registerError}</p>
+                                }
+                            </div>
+
+
+
                             <div className="form-control mt-6">
                                 <button className="btn btn-primary">Register</button>
                             </div>

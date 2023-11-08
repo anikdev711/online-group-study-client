@@ -26,7 +26,7 @@ const Faq = () => {
                 <div className="collapse collapse-plus bg-base-200">
                     <input type="radio" name="my-accordion-3" />
                     <div className="collapse-title text-xl font-medium">
-                        Is is productive study group?
+                        Is the study group productive ?
                     </div>
                     <div className="collapse-content">
                         <p>Yes, you can discuss with other members about study anytime</p>

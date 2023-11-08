@@ -50,7 +50,7 @@ const UpdateAssignmentsCard = ({ isUpdateAssignment }) => {
         axios.put(`/assignments/${_id}`, updateAssignmentInfo)
             .then((response) => {
                 console.log(response);
-                if(response.data.modifiedCount>0){
+                if (response.data.modifiedCount > 0) {
                     Swal.fire("Assignment updated successfully");
                     // navigate('/all-assignments')
                 }
@@ -65,6 +65,9 @@ const UpdateAssignmentsCard = ({ isUpdateAssignment }) => {
 
     return (
         <div>
+
+
+
 
             <div className="bg-primary font-poppins">
                 <h1 className="text-3xl font-extrabold text-center pt-20 mb-10">Update Assignment</h1>

@@ -3,24 +3,84 @@
 const Featured = () => {
     return (
         <div>
-            <div>
-                <div className="hero min-h-screen">
-                    <div className="hero-content flex-col lg:flex-row gap-20">
-                        <img src="https://i.imgur.com/FT7RRqT.png" className="max-w-sm rounded-lg shadow-2xl" />
-                        <div>
-                            <h1 className="text-5xl font-bold mb-10">Meet, discuss and <br /> study in online</h1>
-                            <ul className="list-disc">
-                                <li>Group discussion</li>
-                                <li>Practice tasks</li>
-                                <li>Assignments</li>
-                                <li>Learn from mistakes</li>
-                                <li>Online study materials</li>
-                            </ul>
-                            
+
+            <h1 className="text-center font-bold text-4xl mt-20 mb-10">Featured</h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
+
+                <div>
+                    <div className="card w-96 bg-base-100 shadow-xl">
+                        <div className="card-body">
+                            <h2 className="card-title">Skill assessment</h2>
+                            <p>A Skill assessment help you learn better </p>
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <div>
+                        <div className="card w-96 bg-base-100 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title">Group discussion</h2>
+                                <p>A group discussion help you learn better </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="card w-96 bg-base-100 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title">Practice tasks</h2>
+                                <p>A Practice tasks help you learn better </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="card w-96 bg-base-100 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title">Assignments</h2>
+                                <p>A Assignments help you learn better </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="card w-96 bg-base-100 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title">Group discussion</h2>
+                                <p>A group discussion help you to learn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="card w-96 bg-base-100 shadow-xl">
+                            <div className="card-body">
+                                <h2 className="card-title">Online study materials</h2>
+                                <p>A Onlinematerials help you learn </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
             </div>
+
+
+
+
         </div>
     );
 };

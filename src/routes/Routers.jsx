@@ -33,7 +33,9 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <AssignmentDetails></AssignmentDetails>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5173/all-assignments/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5173/all-assignments/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5173/all-assignments/${params.id}`)
+                loader: ({ params }) => fetch(`https://online-group-study-server-six.vercel.app/api/v1/assignments/${params.id}`)
             },
             {
                 path: "/create-assignments",
@@ -64,14 +66,16 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <SubmittedAssignmentDetails></SubmittedAssignmentDetails>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5173/submitted-assignments/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5173/submitted-assignments/${params.id}`)
+                loader: ({ params }) => fetch(`https://online-group-study-server-six.vercel.app/api/v1/submissions/${params.id}`)
             },
             {
                 path: "/update-assignments/:id",
                 element: <PrivateRoute>
                     <UpdateAssignments></UpdateAssignments>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5173/update-assignments/${params.id}`)
+                // loader: ({ params }) => fetch(`http://localhost:5173/update-assignments/${params.id}`)
+                loader: ({ params }) => fetch(`https://online-group-study-server-six.vercel.app/api/v1/assignments/${params.id}`)
             },
             {
                 path: "/login",

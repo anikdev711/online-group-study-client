@@ -37,7 +37,7 @@ const AssignmentDetails = () => {
         axios.get('/assignments')
             .then(res => {
                 console.log(res.data);
-                const getSpecificAssignment = res?.data?.find((item) => item._id === id)
+                const getSpecificAssignment = res?.data?.result?.find((item) => item._id === id)
                 setAssignmentData(getSpecificAssignment);
 
             })

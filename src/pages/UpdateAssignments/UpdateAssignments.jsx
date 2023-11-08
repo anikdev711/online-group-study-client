@@ -31,7 +31,7 @@ const UpdateAssignments = () => {
 
     // console.log(data);
     useEffect(() => {
-        const findAssignment = data?.data?.find((item) => item._id === id);
+        const findAssignment = data?.data?.result?.find((item) => item._id === id);
         console.log(findAssignment);
         setIsUpdateAssignment(findAssignment)
     }, [data?.data, id])
@@ -54,9 +54,10 @@ const UpdateAssignments = () => {
         <div>
             <div>
                 {
-                    isLoading ? (<div className="flex justify-center items-center h-screen"><progress className="progress w-56"></progress></div>)
+                    isLoading ? ( <p>Loading ...</p> )
                         : (
-                            <UpdateAssignmentsCard isUpdateAssignment={isUpdateAssignment}></UpdateAssignmentsCard>
+                            <UpdateAssignmentsCard 
+                            isUpdateAssignment={isUpdateAssignment}></UpdateAssignmentsCard>
                         )
                 }
             </div>
