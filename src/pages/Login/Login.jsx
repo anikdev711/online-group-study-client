@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 const Login = () => {
 
     const { signInGroupStudyUserByEmailPassword, signInGroupStudyUserByGoogle } = useContext(AuthContext);
-    const {signOutGroupStudyUser}=useContext(AuthContext)
+    const { signOutGroupStudyUser } = useContext(AuthContext)
     const axios = useAxios();
     const location = useLocation();
     const navigate = useNavigate();
@@ -33,15 +33,17 @@ const Login = () => {
                 const user = {
                     email
                 }
-                const response = axios.post('/auth/user-token',user)
-                if(response.data.success){
-                    console.log(response);
-                    Swal.fire("Signed in successfully");
-                    navigate(from, { replace: true });
-                }
-                else{
-                    signOutGroupStudyUser();
-                }
+                axios.post('/auth/user-token', user)
+                    .then((response) => {
+                        console.log(response);
+                        if (response.data.success) {
+                            Swal.fire("Signed in successfully");
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            signOutGroupStudyUser();
+                        }
+                    })
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -56,9 +58,30 @@ const Login = () => {
         event.preventDefault();
         signInGroupStudyUserByGoogle()
             .then((result) => {
-                const user = result.user;
+                const googleSignedInUser = result.user;
+                console.log(googleSignedInUser);
+                // navigate(from, { replace: true });
+
+                const googleSignedInUserEmail = googleSignedInUser.email;
+                const user = {
+                    googleSignedInUserEmail
+                }
                 console.log(user);
-                navigate(from, { replace: true });
+                axios.post('/auth/user-token', user)
+                    .then((response) => {
+                        console.log(response);
+                        if (response.data.success) {
+                            Swal.fire("Signed in successfully");
+                            navigate(from, { replace: true });
+                        }
+                        else {
+                            signOutGroupStudyUser();
+                        }
+                    })
+
+
+
+
             })
             .catch((error) => {
                 const errorCode = error.code;

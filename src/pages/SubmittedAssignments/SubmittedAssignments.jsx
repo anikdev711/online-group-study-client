@@ -2,6 +2,8 @@
 import useAxios from "../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import SubmittedAssignmentsTable from "./SubmittedAssignmentsTable";
+// import { useContext, useEffect, useState } from "react";
+// import { AuthContext } from "../../providers/AuthProvider";
 // import { useEffect, useState } from "react";
 
 
@@ -23,8 +25,31 @@ const SubmittedAssignments = () => {
     //         })
     // }, [axios, submittedAssignments])
 
+    // const [dbUsers, setDbUsers] = useState([]);
+    // const { user } = useContext(AuthContext);
+
+    // useEffect(() => {
+    //     axios.get('/users')
+    //         .then(res => {
+    //             console.log(res);
+    //             console.log(res.data);
+    //             const validUser = res?.data?.find((item) => item?.email === user?.email)
+    //             setDbUsers(validUser)
+
+    //         })
+    // }, [axios, user?.email])
+    // console.log(dbUsers.email);
+    // const url = `/submissions?email=${dbUsers?.email}`
+
+
+
+
+
+
+
     const submittedAssignmentsFromDb = () => {
         const response = axios.get('/submissions');
+        // const response = axios.get(url);
         return response;
     }
 
@@ -78,7 +103,7 @@ const SubmittedAssignments = () => {
 
                                                 data?.data?.map((submission) => (
                                                     <SubmittedAssignmentsTable
-                                                        key={submission.id}
+                                                        key={submission._id}
                                                         submission={submission}></SubmittedAssignmentsTable>))
                                             }
                                         </tbody>

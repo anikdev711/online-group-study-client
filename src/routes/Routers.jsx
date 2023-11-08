@@ -43,7 +43,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "/my-assignments",
-                element: <MyAssignments></MyAssignments>
+                element: <PrivateRoute>
+                    <MyAssignments></MyAssignments>
+                </PrivateRoute>
             },
             // {
             //     path: "/:id/submission-form",

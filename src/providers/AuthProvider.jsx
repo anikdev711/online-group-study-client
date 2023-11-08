@@ -1,15 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import app from "../config/firebase.config";
+import axios from "axios";
+// import useAxios from "../hooks/useAxios";
 
 
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-
-
 const AuthProvider = ({ children }) => {
+    // const axios = useAxios();
 
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,14 +44,43 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            const userEmail = currentUser?.email || user?.email;
+            const signedInCurrentUser = {
+                email: userEmail
+            }
             console.log('The present user is now', currentUser);
             setUser(currentUser);
             setIsLoading(false);
+
+            if (currentUser) {
+                axios.post('http://localhost:5000/api/v1/auth/user-token', signedInCurrentUser, {
+                    withCredentials: true
+                })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            }
+            else {
+                axios.post('http://localhost:5000/api/v1/auth/logout', signedInCurrentUser, {
+                    withCredentials: true
+
+                })
+                    .then((response) => {
+                        console.log(response);
+                        console.log(response.data);
+                    })
+
+            }
+
         })
         return () => {
             return unSubscribe();
         }
-    }, [])
+    }, [user?.email])
 
 
 
