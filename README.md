@@ -2,7 +2,12 @@ assignment_category_0001
 
 Website Name: StudyPeerConnect
 
-Website Live Link: 
+Website Live Link (firebase): https://online-study-group-auth.web.app/
+
+Alternative website live link (netlify): https://654bb42759d2f97efc378f53--thunderous-mermaid-a2d059.netlify.app/
+
+server live link (vercel, if requires): https://online-group-study-server-six.vercel.app/
+
 
 Website Features: 
 
