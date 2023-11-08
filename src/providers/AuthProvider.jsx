@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
             setIsLoading(false);
 
             if (currentUser) {
-                axios.post('http://localhost:5000/api/v1/auth/user-token', signedInCurrentUser, {
+                axios.post('https://online-group-study-server-six.vercel.app/api/v1/auth/user-token', signedInCurrentUser, {
                     withCredentials: true
                 })
                     .then((response) => {
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
                     })
             }
             else {
-                axios.post('http://localhost:5000/api/v1/auth/logout', signedInCurrentUser, {
+                axios.post('https://online-group-study-server-six.vercel.app/api/v1/auth/logout', signedInCurrentUser, {
                     withCredentials: true
 
                 })
